@@ -11,6 +11,7 @@ Proxy Toggle is a straightforward Browser extension that allows you to switch be
 
 ## How to Use
 
+1. Install chrome extension from [Chrome Store](https://chrome.google.com/webstore/detail/bcalikfdfalhmdfinflciajgopeomhfb)
 1. Click the extension icon in your browser toolbar
 2. Green icon means system proxy is on, gray means direct connection
 3. That's it! Your browser immediately applies the new setting
