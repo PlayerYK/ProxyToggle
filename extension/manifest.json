@@ -1,12 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Proxy Toggle: Simple System Proxy Switcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Toggle between system proxy and direct connection",
-  "permissions": [
-    "proxy",
-    "storage"
-  ],
+  "permissions": ["proxy", "storage"],
   "background": {
     "service_worker": "background.js"
   },

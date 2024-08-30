@@ -41,3 +41,22 @@ chrome.storage.local.get(['proxyEnabled'], function(result) {
     updateProxy();
   }
 });
+
+// Add the following code at the end of the file
+chrome.runtime.onInstalled.addListener(function(details) {
+  if (details.reason === "install") {
+    chrome.proxy.settings.get({}, function(config) {
+      if (config.value.mode === "system") {
+        proxyEnabled = true;
+        chrome.action.setIcon({path: "img/on/128.png"});
+      } else {
+        proxyEnabled = false;
+        chrome.action.setIcon({path: "img/off/128.png"});
+      }
+      // Save initial state
+      chrome.storage.local.set({proxyEnabled: proxyEnabled}, function() {
+        console.log('Initial proxy state saved');
+      });
+    });
+  }
+});
