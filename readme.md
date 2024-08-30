@@ -18,3 +18,8 @@ Proxy Toggle is a straightforward Browser extension that allows you to switch be
 Perfect for developers, privacy-conscious users, and anyone who frequently switches between proxy and direct connections.
 
 Simplify your browsing experience with Proxy Toggle!
+
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
