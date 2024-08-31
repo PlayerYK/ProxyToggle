@@ -16,6 +16,7 @@ function updateProxy() {
       function() {}
     );
     chrome.action.setIcon({path: "img/on/128.png"});
+    chrome.action.setTitle({ title: "Proxy is ON" });
   } else {
     // Disable proxy (direct connection)
     chrome.proxy.settings.set(
@@ -26,6 +27,7 @@ function updateProxy() {
       function() {}
     );
     chrome.action.setIcon({path: "img/off/128.png"});
+    chrome.action.setTitle({ title: "Proxy is OFF" });
   }
   
   // Save the current state
