@@ -9,14 +9,14 @@
   },
   "action": {
     "default_icon": {
-      "16": "img/off/16.png",
-      "48": "img/off/48.png",
-      "128": "img/off/128.png"
+      "16": "img/on/16.png",
+      "48": "img/on/48.png",
+      "128": "img/on/128.png"
     }
   },
   "icons": {
-    "16": "img/off/16.png",
-    "48": "img/off/48.png",
-    "128": "img/off/128.png"
+    "16": "img/on/16.png",
+    "48": "img/on/48.png",
+    "128": "img/on/128.png"
   }
 }
