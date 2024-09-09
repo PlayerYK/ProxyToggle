@@ -63,13 +63,13 @@ chrome.runtime.onInstalled.addListener(function(details) {
   }
 });
 
-// 添加以下代码到文件末尾
-let failedDomains = new Set();
+// 使用对象来存储每个 tab 的失败域名
+let failedDomainsByTab = {};
 
 function handleFailedRequest(details) {
   const url = new URL(details.url);
   const tabId = details.tabId;
-  
+
   if (tabId === -1) return; // 忽略不属于特定标签页的请求
 
   if (!failedDomainsByTab[tabId]) {
@@ -79,39 +79,41 @@ function handleFailedRequest(details) {
   updateBadgeForTab(tabId);
 }
 
-chrome.webRequest.onErrorOccurred.addListener(
-  handleFailedRequest,
-  {urls: ["<all_urls>"]}
-);
+chrome.webRequest.onErrorOccurred.addListener(handleFailedRequest, {
+  urls: ["<all_urls>"],
+});
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("Received message in background:", message);
-  if (message.type === 'resourceFailed') {
+  if (message.type === "resourceFailed") {
     const tabId = sender.tab.id;
     if (!failedDomainsByTab[tabId]) {
       failedDomainsByTab[tabId] = new Set();
     }
     failedDomainsByTab[tabId].add(message.domain);
-    console.log("Updated failed domains for tab", tabId, ":", Array.from(failedDomainsByTab[tabId]));
     updateBadgeForTab(tabId);
-    sendResponse({received: true});
+    sendResponse({ received: true });
   }
 });
 
 function updateBadgeForTab(tabId) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (tabs[0] && tabs[0].id === tabId) {
-      const count = failedDomainsByTab[tabId] ? failedDomainsByTab[tabId].size : 0;
-      console.log("Updating badge for tab", tabId, "with count:", count);
-      chrome.action.setBadgeText({ text: count > 0 ? count.toString() : '', tabId: tabId });
-      chrome.action.setBadgeBackgroundColor({ color: '#FF0000', tabId: tabId });
+      const count = failedDomainsByTab[tabId]
+        ? failedDomainsByTab[tabId].size
+        : 0;
+      chrome.action.setBadgeText({
+        text: count > 0 ? count.toString() : "",
+        tabId: tabId,
+      });
+      chrome.action.setBadgeBackgroundColor({ color: "#333333", tabId: tabId }); // 改为深色背景
+      chrome.action.setBadgeTextColor({ color: "#FFFFFF", tabId: tabId }); // 设置白色文字
     }
   });
 }
 
 // 当标签页更新时更新 badge
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === 'complete') {
+  if (changeInfo.status === "complete") {
     updateBadgeForTab(tabId);
   }
 });
@@ -138,58 +140,3 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.tabs.onCreated.addListener((tab) => {
   clearFailedDomainsForTab(tab.id);
 });
-
-// 使用对象来存储每个 tab 的失败域名
-let failedDomainsByTab = {};
-
-function handleFailedRequest(details) {
-  const url = new URL(details.url);
-  const tabId = details.tabId;
-  
-  if (tabId === -1) return; // 忽略不属于特定标签页的请求
-
-  if (!failedDomainsByTab[tabId]) {
-    failedDomainsByTab[tabId] = new Set();
-  }
-  failedDomainsByTab[tabId].add(url.hostname);
-  updateBadgeForTab(tabId);
-}
-
-chrome.webRequest.onErrorOccurred.addListener(
-  handleFailedRequest,
-  {urls: ["<all_urls>"]}
-);
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("Received message in background:", message);
-  if (message.type === 'resourceFailed') {
-    const tabId = sender.tab.id;
-    if (!failedDomainsByTab[tabId]) {
-      failedDomainsByTab[tabId] = new Set();
-    }
-    failedDomainsByTab[tabId].add(message.domain);
-    console.log("Updated failed domains for tab", tabId, ":", Array.from(failedDomainsByTab[tabId]));
-    updateBadgeForTab(tabId);
-    sendResponse({received: true});
-  }
-});
-
-function updateBadgeForTab(tabId) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    if (tabs[0] && tabs[0].id === tabId) {
-      const count = failedDomainsByTab[tabId] ? failedDomainsByTab[tabId].size : 0;
-      console.log("Updating badge for tab", tabId, "with count:", count);
-      chrome.action.setBadgeText({ text: count > 0 ? count.toString() : '', tabId: tabId });
-      chrome.action.setBadgeBackgroundColor({ color: '#FF0000', tabId: tabId });
-    }
-  });
-}
-
-// 清除失败域名列表的函数
-function clearFailedDomains() {
-  failedDomains.clear();
-  updateBadge();
-}
-
-// 每次打开新标签页时清除失败域名列表
-chrome.tabs.onCreated.addListener(clearFailedDomains);
