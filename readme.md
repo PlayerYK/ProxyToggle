@@ -20,6 +20,11 @@ Perfect for developers, privacy-conscious users, and anyone who frequently switc
 
 Simplify your browsing experience with Proxy Toggle!
 
+## Open Source
+
+This project is open source. You can view the code and contribute on GitHub:
+[https://github.com/PlayerYK/ProxyToggle](https://github.com/PlayerYK/ProxyToggle)
+
 ## Changelog
 
 ### Version 1.1.0 (2024-09-09)
