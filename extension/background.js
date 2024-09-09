@@ -83,15 +83,13 @@ chrome.webRequest.onErrorOccurred.addListener(handleFailedRequest, {
   urls: ["<all_urls>"],
 });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "resourceFailed") {
-    const tabId = sender.tab.id;
-    if (!failedDomainsByTab[tabId]) {
-      failedDomainsByTab[tabId] = new Set();
-    }
-    failedDomainsByTab[tabId].add(message.domain);
-    updateBadgeForTab(tabId);
-    sendResponse({ received: true });
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === "updateProxy") {
+    proxyEnabled = request.enabled;
+    updateProxy();
+  } else if (request.action === "getFailedResources") {
+    const failedResources = Array.from(failedDomainsByTab[request.tabId] || []);
+    sendResponse({ failedResources: failedResources });
   }
 });
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Proxy Switcher</title>
+  <style>
+    body { 
+      width: 300px; 
+      padding: 20px; 
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    .proxy-status {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-right: 15px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    #proxyStatus {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #failedResources {
+      margin-top: 20px;
+      background-color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #failedResources h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    #resourceList {
+      padding-left: 20px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    #copyResources {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="proxy-status">
+    <label class="toggle-switch">
+      <input type="checkbox" id="toggleProxy">
+      <span class="slider"></span>
+    </label>
+    <span id="proxyStatus">System Proxy Disabled</span>
+  </div>
+  <div id="failedResources">
+    <h3>Failed Resources</h3>
+    <ul id="resourceList"></ul>
+    <button id="copyResources" style="display: none;">Copy Failed Domain List</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

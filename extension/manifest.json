@@ -1,19 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Proxy Toggle: Simple System Proxy Switcher",
-  "version": "1.0.2",
-  "description": "Toggle between system proxy and direct connection",
+  "version": "1.1.0",
+  "description": "Toggle system proxy and collect failed domains",
   "permissions": ["storage", "proxy", "tabs", "activeTab", "webRequest"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_icon": {
-      "16": "img/on/16.png",
-      "48": "img/on/48.png",
-      "128": "img/on/128.png"
-    }
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "img/on/16.png",
