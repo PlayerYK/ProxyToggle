@@ -94,18 +94,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function updateBadgeForTab(tabId) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (tabs[0] && tabs[0].id === tabId) {
-      const count = failedDomainsByTab[tabId]
-        ? failedDomainsByTab[tabId].size
-        : 0;
-      chrome.action.setBadgeText({
-        text: count > 0 ? count.toString() : "",
-        tabId: tabId,
-      });
-      chrome.action.setBadgeBackgroundColor({ color: "#333333", tabId: tabId }); // 改为深色背景
-      chrome.action.setBadgeTextColor({ color: "#FFFFFF", tabId: tabId }); // 设置白色文字
+  chrome.tabs.get(tabId, function (tab) {
+    if (chrome.runtime.lastError) {
+      console.log("标签页不存在:", chrome.runtime.lastError.message);
+      return;
     }
+    // 标签页存在，继续处理
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      if (tabs[0] && tabs[0].id === tabId) {
+        const count = failedDomainsByTab[tabId]
+          ? failedDomainsByTab[tabId].size
+          : 0;
+        chrome.action.setBadgeText({
+          text: count > 0 ? count.toString() : "",
+          tabId: tabId,
+        });
+        chrome.action.setBadgeBackgroundColor({
+          color: "#333333",
+          tabId: tabId,
+        }); // 改为深色背景
+        chrome.action.setBadgeTextColor({ color: "#FFFFFF", tabId: tabId }); // 设置白色文字
+      }
+    });
   });
 }
 
