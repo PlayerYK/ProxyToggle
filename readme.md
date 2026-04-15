@@ -29,27 +29,10 @@ This project is open source. You can view the code and contribute on GitHub:
 
 ### Version 1.2.0 (2026-04-15)
 
-**Bug Fixes:**
-
-- Fixed duplicate resource list items rendering bug in popup
-- Removed redundant onClicked listener in background script
-- Improved resource error detection logic to reduce false positives
-
-**New Features:**
-
-- Added "Clear List" button to remove failed resources for current tab
-- Complete UI redesign with modern card-based layout
-- Added smooth animations and micro-interactions
-- Automatic dark mode support (follows system preferences)
-
-**UI Improvements:**
-
-- Gradient backgrounds with modern color scheme
-- Enhanced toggle switch design with smooth transitions
-- Better visual hierarchy and typography
-- Hover effects and visual feedback
-- Custom scrollbar styling
-- Improved button design with gradient effects
+- Added "Clear List" button to remove failed resources
+- Redesigned UI with cleaner layout and better readability
+- Added automatic dark mode support
+- Fixed several bugs and improved stability
 
 ### Version 1.1.0 (2024-09-09)
 
