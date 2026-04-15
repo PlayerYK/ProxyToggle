@@ -1,0 +1,23 @@
+{
+  "name": "proxy-toggle-extension",
+  "version": "1.2.1",
+  "description": "Build scripts for Proxy Toggle extension",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:patch": "node scripts/build.js patch",
+    "build:minor": "node scripts/build.js minor",
+    "build:major": "node scripts/build.js major",
+    "package": "node scripts/package.js",
+    "release": "npm run build:patch && npm run package",
+    "clean": "node scripts/clean.js"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1"
+  },
+  "keywords": [
+    "chrome-extension",
+    "proxy"
+  ],
+  "author": "",
+  "license": "Apache-2.0"
+}

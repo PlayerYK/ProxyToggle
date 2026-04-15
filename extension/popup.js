@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var proxyStatus = document.getElementById("proxyStatus");
   var resourceList = document.getElementById("resourceList");
   var copyButton = document.getElementById("copyResources");
+  var clearButton = document.getElementById("clearResources");
 
   // init proxy status
   chrome.storage.local.get("proxyEnabled", function (data) {
@@ -57,17 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
       { action: "getFailedResources", tabId: tabs[0].id },
       function (response) {
         if (response && response.failedResources.length > 0) {
-          response.failedResources.forEach(function (resource) {
-            const li = document.createElement("li");
-            li.textContent = resource;
-            resourceList.appendChild(li);
-          });
           updateResourceList(response.failedResources);
         } else {
-          const li = document.createElement("li");
-          li.textContent = "No failed resources";
-          resourceList.appendChild(li);
-          copyButton.style.display = "none";
+          updateResourceList([]);
         }
       }
     );
@@ -78,12 +71,31 @@ document.addEventListener("DOMContentLoaded", function () {
     copyButton.addEventListener("click", function () {
       const resources = Array.from(resourceList.children)
         .map((li) => li.textContent)
+        .filter((text) => text !== "No failed resources")
         .join("\n");
       navigator.clipboard.writeText(resources).then(function () {
         copyButton.textContent = "Copied!";
         setTimeout(function () {
-          copyButton.textContent = "Copy Resource List";
+          copyButton.textContent = "Copy List";
         }, 2000);
+      });
+    });
+  }
+
+  // clear resource list
+  if (clearButton) {
+    clearButton.addEventListener("click", function () {
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.runtime.sendMessage(
+          { action: "clearFailedResources", tabId: tabs[0].id },
+          function (response) {
+            updateResourceList([]);
+            clearButton.textContent = "Cleared!";
+            setTimeout(function () {
+              clearButton.textContent = "Clear List";
+            }, 2000);
+          }
+        );
       });
     });
   }
@@ -92,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateResourceList(resources) {
   const resourceList = document.getElementById("resourceList");
   const copyButton = document.getElementById("copyResources");
+  const clearButton = document.getElementById("clearResources");
 
   resourceList.innerHTML = "";
 
@@ -102,7 +115,13 @@ function updateResourceList(resources) {
       resourceList.appendChild(li);
     });
     copyButton.style.display = "inline-block";
+    clearButton.style.display = "inline-block";
   } else {
+    const li = document.createElement("li");
+    li.textContent = "No failed resources";
+    li.style.color = "#999";
+    resourceList.appendChild(li);
     copyButton.style.display = "none";
+    clearButton.style.display = "none";
   }
 }

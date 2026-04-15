@@ -27,12 +27,38 @@ This project is open source. You can view the code and contribute on GitHub:
 
 ## Changelog
 
+### Version 1.2.0 (2026-04-15)
+
+**Bug Fixes:**
+
+- Fixed duplicate resource list items rendering bug in popup
+- Removed redundant onClicked listener in background script
+- Improved resource error detection logic to reduce false positives
+
+**New Features:**
+
+- Added "Clear List" button to remove failed resources for current tab
+- Complete UI redesign with modern card-based layout
+- Added smooth animations and micro-interactions
+- Automatic dark mode support (follows system preferences)
+
+**UI Improvements:**
+
+- Gradient backgrounds with modern color scheme
+- Enhanced toggle switch design with smooth transitions
+- Better visual hierarchy and typography
+- Hover effects and visual feedback
+- Custom scrollbar styling
+- Improved button design with gradient effects
+
 ### Version 1.1.0 (2024-09-09)
+
 - New feature: Display list of domains that failed due to proxy
 - New feature: Button to copy the list of failed domains
 - Optimization: Copy button only shows when there are failed domains
 
 ### Version 1.0.0 (2024-08-30)
+
 - Initial release
 - Implemented basic proxy switching functionality
 - Added icon state feedback

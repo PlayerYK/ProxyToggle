@@ -1,10 +1,5 @@
 let proxyEnabled = false;
 
-chrome.action.onClicked.addListener(function(tab) {
-  proxyEnabled = !proxyEnabled;
-  updateProxy();
-});
-
 function updateProxy() {
   if (proxyEnabled) {
     // Enable system proxy
@@ -90,6 +85,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } else if (request.action === "getFailedResources") {
     const failedResources = Array.from(failedDomainsByTab[request.tabId] || []);
     sendResponse({ failedResources: failedResources });
+  } else if (request.action === "clearFailedResources") {
+    clearFailedDomainsForTab(request.tabId);
+    sendResponse({ success: true });
   }
 });
 

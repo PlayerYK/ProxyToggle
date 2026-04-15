@@ -3,29 +3,74 @@
 <head>
   <title>Proxy Switcher</title>
   <style>
-    body { 
-      width: 300px; 
-      padding: 20px; 
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body { 
+      width: 320px; 
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      background: #f5f5f5;
+      color: #2d3748;
+    }
+
+    .container {
+      padding: 12px;
+    }
+
     .proxy-status {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      justify-content: space-between;
+      transition: box-shadow 0.2s;
     }
+
+    .proxy-status:hover {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .status-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .status-label {
+      font-size: 11px;
+      color: #718096;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #proxyStatus {
+      font-weight: 600;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
     .toggle-switch {
       position: relative;
       display: inline-block;
-      width: 60px;
-      height: 34px;
-      margin-right: 15px;
+      width: 50px;
+      height: 28px;
+      flex-shrink: 0;
     }
+
     .toggle-switch input {
       opacity: 0;
       width: 0;
       height: 0;
     }
+
     .slider {
       position: absolute;
       cursor: pointer;
@@ -33,75 +78,214 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 34px;
+      background: #ccc;
+      transition: all 0.3s;
+      border-radius: 28px;
     }
+
     .slider:before {
       position: absolute;
       content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      transition: all 0.3s;
       border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+
     input:checked + .slider {
-      background-color: #4CAF50;
+      background: #4CAF50;
     }
+
     input:checked + .slider:before {
-      transform: translateX(26px);
+      transform: translateX(22px);
     }
-    #proxyStatus {
-      font-weight: bold;
-      font-size: 18px;
+
+    input:focus + .slider {
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
     }
+
     #failedResources {
-      margin-top: 20px;
-      background-color: white;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     #failedResources h3 {
-      font-size: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d3748;
       margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+
     #resourceList {
-      padding-left: 20px;
-      color: #666;
-      font-size: 14px;
-      line-height: 1.4;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+      max-height: 180px;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
-    #copyResources {
-      background-color: #4CAF50;
+
+    #resourceList::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #resourceList::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 3px;
+    }
+
+    #resourceList::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    #resourceList::-webkit-scrollbar-thumb:hover {
+      background: #999;
+    }
+
+    #resourceList li {
+      padding: 6px 10px;
+      margin-bottom: 4px;
+      background: #f7f7f7;
+      border-radius: 4px;
+      color: #555;
+      font-size: 12px;
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      transition: background 0.2s;
+    }
+
+    #resourceList li:hover {
+      background: #eee;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      flex: 1;
       border: none;
       color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      margin-top: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
       border-radius: 4px;
+      transition: opacity 0.2s;
+      font-family: inherit;
+    }
+
+    #copyResources {
+      background: #4CAF50;
+    }
+
+    #copyResources:hover {
+      opacity: 0.9;
+    }
+
+    #clearResources {
+      background: #f44336;
+    }
+
+    #clearResources:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* 深色模式 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1e1e1e;
+      }
+
+      .proxy-status,
+      #failedResources {
+        background: #2d2d2d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .proxy-status:hover {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      .status-label {
+        color: #999;
+      }
+
+      #proxyStatus {
+        color: #e0e0e0;
+      }
+
+      #failedResources h3 {
+        color: #e0e0e0;
+      }
+
+      #resourceList::-webkit-scrollbar-track {
+        background: #1e1e1e;
+      }
+
+      #resourceList::-webkit-scrollbar-thumb {
+        background: #555;
+      }
+
+      #resourceList::-webkit-scrollbar-thumb:hover {
+        background: #666;
+      }
+
+      #resourceList li {
+        background: #1e1e1e;
+        color: #ccc;
+      }
+
+      #resourceList li:hover {
+        background: #3a3a3a;
+      }
+
+      .slider {
+        background: #555;
+      }
+
+      input:checked + .slider {
+        background: #4CAF50;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="proxy-status">
-    <label class="toggle-switch">
-      <input type="checkbox" id="toggleProxy">
-      <span class="slider"></span>
-    </label>
-    <span id="proxyStatus">System Proxy Disabled</span>
-  </div>
-  <div id="failedResources">
-    <h3>Failed Resources</h3>
-    <ul id="resourceList"></ul>
-    <button id="copyResources" style="display: none;">Copy Failed Domain List</button>
+  <div class="container">
+    <div class="proxy-status">
+      <div class="status-info">
+        <span class="status-label">Proxy Status</span>
+        <span id="proxyStatus">System Proxy Disabled</span>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggleProxy">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div id="failedResources">
+      <h3>Failed Resources</h3>
+      <ul id="resourceList"></ul>
+      <div class="button-group">
+        <button id="copyResources" style="display: none;">Copy List</button>
+        <button id="clearResources" style="display: none;">Clear List</button>
+      </div>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>
