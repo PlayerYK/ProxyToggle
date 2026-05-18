@@ -115,6 +115,44 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
+    .settings-panel {
+      background: white;
+      padding: 4px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 12px;
+    }
+
+    .setting-row {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .setting-value {
+      color: #2d3748;
+      font-size: 13px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
+    }
+
     #failedResources h3 {
       font-size: 13px;
       font-weight: 600;
@@ -202,6 +240,18 @@
       opacity: 0.9;
     }
 
+    .secondary-button {
+      flex: 0 0 auto;
+      min-width: 74px;
+      background: #2f6fed;
+      padding: 7px 10px;
+      white-space: nowrap;
+    }
+
+    .secondary-button:hover {
+      opacity: 0.9;
+    }
+
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
@@ -214,6 +264,7 @@
       }
 
       .proxy-status,
+      .settings-panel,
       #failedResources {
         background: #2d2d2d;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -228,6 +279,14 @@
       }
 
       #proxyStatus {
+        color: #e0e0e0;
+      }
+
+      .setting-row {
+        border-bottom-color: #3a3a3a;
+      }
+
+      .setting-value {
         color: #e0e0e0;
       }
 
@@ -263,6 +322,10 @@
       input:checked + .slider {
         background: #4CAF50;
       }
+
+      .secondary-button {
+        background: #3f7ff5;
+      }
     }
   </style>
 </head>
@@ -277,6 +340,22 @@
         <input type="checkbox" id="toggleProxy">
         <span class="slider"></span>
       </label>
+    </div>
+    <div class="settings-panel">
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="status-label">Keyboard Shortcut</span>
+          <span class="setting-value" id="shortcutStatus">Not set</span>
+        </div>
+        <button class="secondary-button" id="openShortcutSettings">Set Shortcut</button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="status-label">Shortcut Notifications</span>
+          <span class="setting-value" id="notificationStatus">Disabled</span>
+        </div>
+        <button class="secondary-button" id="toggleNotifications">Enable</button>
+      </div>
     </div>
     <div id="failedResources">
       <h3>Failed Resources</h3>

@@ -53,5 +53,4 @@ try {
   observer.observe({ entryTypes: ["resource"] });
 } catch (e) {
   // 某些浏览器可能不支持
-  console.log("PerformanceObserver not supported");
 }

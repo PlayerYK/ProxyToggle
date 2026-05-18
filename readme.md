@@ -1,10 +1,12 @@
 # Proxy Toggle: Simple System Proxy Switcher
 
-Proxy Toggle is a straightforward browser extension that allows you to switch between your system proxy and a direct internet connection with a single click.
+Proxy Toggle is a straightforward browser extension that lets you switch between your system proxy and a direct internet connection from the popup, or assign a keyboard shortcut for direct switching.
 
 ## Key Features
 
-- One-click toggle between system proxy and direct connection
+- Toggle between system proxy and direct connection from the popup
+- Optional keyboard shortcut for direct proxy switching
+- Optional shortcut notifications with runtime permission
 - Visual icon feedback for current proxy state
 - Remembers your settings across browser sessions
 - Display and copy list of domains of failed resources (New feature)
@@ -12,9 +14,10 @@ Proxy Toggle is a straightforward browser extension that allows you to switch be
 ## How to Use
 
 1. Install the Chrome extension from the [Chrome Store](https://chrome.google.com/webstore/detail/bcalikfdfalhmdfinflciajgopeomhfb)
-2. Click the extension icon in your browser toolbar
-3. Green icon means system proxy is on, gray means direct connection
-4. View and copy the list of failed domains, if any (New feature)
+2. Click the extension icon in your browser toolbar to open the popup
+3. Toggle proxy from the popup, or use Set Shortcut to assign a direct toggle shortcut
+4. Green icon means system proxy is on, gray means direct connection
+5. View and copy the list of failed domains, if any (New feature)
 
 Perfect for developers, privacy-conscious users, and anyone who frequently switches between proxy and direct connections.
 
@@ -26,6 +29,13 @@ This project is open source. You can view the code and contribute on GitHub:
 [https://github.com/PlayerYK/ProxyToggle](https://github.com/PlayerYK/ProxyToggle)
 
 ## Changelog
+
+### Unreleased
+
+- Added an optional keyboard shortcut command for direct proxy switching
+- Added a visible shortcut settings entry in the popup
+- Added optional shortcut notifications for every keyboard shortcut toggle without requiring notification permission at install time
+- Kept the toolbar click behavior focused on opening the details popup
 
 ### Version 1.2.0 (2026-04-15)
 
