@@ -1,5 +1,7 @@
 # Proxy Toggle: Simple System Proxy Switcher
 
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install-4285F4?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/bcalikfdfalhmdfinflciajgopeomhfb)
+
 Proxy Toggle is a straightforward browser extension that lets you switch between your system proxy and a direct internet connection from the popup, or assign a keyboard shortcut for direct switching.
 
 ## Key Features
